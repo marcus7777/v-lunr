@@ -1,16 +1,8 @@
-<template>
-  <div>
-    output {{output}}
-  </div>
-</template>
-
 <script>
 import lunr from 'lunr';
 
 export default {
   name:  'vLunr',
-  components: {
-  },
   data: () => {
     return {}
   },
