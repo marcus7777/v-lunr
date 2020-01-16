@@ -17,9 +17,9 @@ export default {
   computed: {
     output: function () {
       if (this.input[0]){
-	let documents = this.input.map(function (val, i){
+        let documents = this.input.map(function (val, i){
           return Object.assign({__id: i},val)
-	})
+        })
         let first = this.input[0]
         let idx = lunr(function () {
           this.ref('__id')
@@ -30,15 +30,15 @@ export default {
           documents.forEach(function (doc) {
             this.add(doc)
           }, this)
-	})
+        })
         return idx.search(this.search).map(function (val, i){
-	  return documents[+val.ref]
-	})
+          return documents[+val.ref]
+        })
       } else {
         return []
       }
     },
-  },	
+  },        
   props: {
     input: { 
       type: Array,
