@@ -16,17 +16,23 @@ export default {
   },
   computed: {
     output: function () {
-      let documents = this.input
-      let idx = lunr(function () {
-        this.ref('name')
-        this.field('text')
+      if (this.input[0]){
+        let documents = this.input
+        let first = this.input[0]
+        let idx = lunr(function () {
+          this.ref('name')
+          Object.keys(first).forEach(function (key) {
+            this.field(key)
+          }, this)
 
-        documents.forEach(function (doc) {
-          this.add(doc)
-        }, this)
-      })
-
-      return idx.search(this.search)
+          documents.forEach(function (doc) {
+            this.add(doc)
+          }, this)
+	})
+        return idx.search(this.search)
+      } else {
+        return []
+      }
     },
   },	
   props: {
