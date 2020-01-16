@@ -23,7 +23,7 @@ export default {
         let first = this.input[0]
         let idx = lunr(function () {
           this.ref('__id')
-          Object.keys(first).forEach(function (key, i) {
+          Object.keys(first).forEach(function (key) {
             this.field(key)
           }, this)
 
