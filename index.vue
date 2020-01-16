@@ -17,11 +17,13 @@ export default {
   computed: {
     output: function () {
       if (this.input[0]){
-        let documents = this.input
+	let documents = this.input.map(function (val, i){
+          return Object.assign({__id: i},val}
+	})
         let first = this.input[0]
         let idx = lunr(function () {
-          this.ref('name')
-          Object.keys(first).forEach(function (key) {
+          this.ref('__id')
+          Object.keys(first).forEach(function (key, i) {
             this.field(key)
           }, this)
 
@@ -37,10 +39,6 @@ export default {
   },	
   props: {
     input: { 
-      default: function () {
-	return [{1: "one"},{2: "two"},{3: "three"}]
-      },
-//      required: true,
       type: Array,
     },
     search:{
