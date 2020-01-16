@@ -18,7 +18,7 @@ export default {
     output: function () {
       if (this.input[0]){
 	let documents = this.input.map(function (val, i){
-          return Object.assign({__id: i},val}
+          return Object.assign({__id: i},val)
 	})
         let first = this.input[0]
         let idx = lunr(function () {
