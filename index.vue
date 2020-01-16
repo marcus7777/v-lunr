@@ -16,13 +16,23 @@ export default {
   },
   computed: {
     output: function () {
-      return this.input
+      let documents = this.input
+      let idx = lunr(function () {
+        this.ref('name')
+        this.field('text')
+
+        documents.forEach(function (doc) {
+          this.add(doc)
+        }, this)
+      })
+
+      return idx.search(this.search)
     },
   },	
   props: {
     input: { 
       default: [{1: "one"},{2: "two"},{3: "three"}],
-      required: true,
+//      required: true,
       type: Array,
     },
     search:{
