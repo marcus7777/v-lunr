@@ -1,5 +1,5 @@
 # v-lunr
-## idea
+## Idea
 ```
 <v-lunr :input="all" :search="text" :output="list" />
 ```
