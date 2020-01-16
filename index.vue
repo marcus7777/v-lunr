@@ -31,7 +31,9 @@ export default {
   },	
   props: {
     input: { 
-      default: [{1: "one"},{2: "two"},{3: "three"}],
+      default: function () {
+	return [{1: "one"},{2: "two"},{3: "three"}]
+      },
 //      required: true,
       type: Array,
     },
