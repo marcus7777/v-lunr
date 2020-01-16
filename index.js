@@ -1,11 +1,3 @@
-<template>
-  <div>
-    <slot>
-      hi
-    </slot>
-  </div>
-</template>
-<script>
 import lunr from 'lunr';
 
 export default {
@@ -53,4 +45,3 @@ export default {
     
   }
 }
-</script>
