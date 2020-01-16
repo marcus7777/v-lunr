@@ -31,7 +31,7 @@ export default {
             this.add(doc)
           }, this)
         })
-        return idx.search(this.search).map(function (val, i){
+        return idx.search(this.search).map(function (val){
           return documents[+val.ref]
         })
       } else {
