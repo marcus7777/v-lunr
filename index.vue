@@ -27,7 +27,7 @@ export default {
     search: function(val) {
       this.onUpdate(idx.search(val).map(function (valu){
         return this.input[+valu.ref];
-      },this);
+      },this))
     }
   },        
   props: {
