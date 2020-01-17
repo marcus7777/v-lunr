@@ -26,6 +26,7 @@ export default {
         const first = this.input[0]
         return lunr(function () {
           this.ref('__id')
+          this.pipeline.remove(lunr.stopWordFilter)
           Object.keys(first).forEach(function (key) {
             this.field(key)
           }, this)
