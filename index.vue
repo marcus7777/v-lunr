@@ -10,17 +10,16 @@ export default {
   data: () => {
     return {
       output:[],
-      idx:[],
     }
   },
-  watch: {
-    input: function (val) {
-      if (val[0]){
-        let documents = this.input.map(function (val, i){
-          return Object.assign({__id: i},val)
+  computed:{
+    idx: function () {
+      if (this.input[0]){
+        const documents = this.input.map(function (val, i){
+          return Object.assign({__id: i}, val)
         })
-        let first = this.input[0]
-        this.idx = lunr(function () {
+        const first = this.input[0]
+        return lunr(function () {
           this.ref('__id')
           Object.keys(first).forEach(function (key) {
             this.field(key)
@@ -29,8 +28,12 @@ export default {
             this.add(doc)
           }, this)
         })
+      } else {
+        return {}
       }
-    },
+    }
+  },
+  watch: {
     search: function(val) {
       this.output = this.idx.search(val).map(function (valu){
         return this.input[+valu.ref];
