@@ -9,7 +9,6 @@ export default {
   name:  'vLunr',
   data: () => {
     return {
-      output:[],
     }
   },
   computed:{
