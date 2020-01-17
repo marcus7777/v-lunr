@@ -31,13 +31,16 @@ export default {
       } else {
         return {}
       }
+    },
+    output: function(){
+      return this.idx.search(val).map(function (valu){
+        return this.input[+valu.ref];
+      },this)
     }
   },
   watch: {
     search: function(val) {
-      this.output = this.idx.search(val).map(function (valu){
-        return this.input[+valu.ref];
-      },this)
+      alert(val)
       this.update(this.output)
     }
   },        
