@@ -24,7 +24,7 @@ export default {
       }
     },
     search: function(val) {
-      this.onUpdate(this.idx.search(val).map(function (valu){
+      this.update(this.idx.search(val).map(function (valu){
         return this.input[+valu.ref];
       },this))
     }
