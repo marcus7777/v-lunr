@@ -44,5 +44,5 @@ export default {
   methods: {
     
   },
-  template: '<p class="foo bar">Hi</p>',
+  template: '<p class="foo bar">{{search}}</p>',
 }
