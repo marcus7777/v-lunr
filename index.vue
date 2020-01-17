@@ -8,7 +8,9 @@ import lunr from 'lunr';
 export default {
   name:  'vLunr',
   data: () => {
-    return {}
+    return {
+      output:[],
+    }
   },
   watch: {
     input: function (val) {
@@ -29,9 +31,10 @@ export default {
       }
     },
     search: function(val) {
-      this.update(this.idx.search(val).map(function (valu){
+      this.output = this.idx.search(val).map(function (valu){
         return this.input[+valu.ref];
-      },this))
+      },this)
+      this.update(this.output)
     }
   },        
   props: {
