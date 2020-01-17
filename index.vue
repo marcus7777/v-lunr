@@ -33,7 +33,7 @@ export default {
       }
     },
     output: function(){
-      return this.idx.search(val).map(function (valu){
+      return this.idx.search(this.search).map(function (valu){
         return this.input[+valu.ref];
       },this)
     }
