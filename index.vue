@@ -38,9 +38,9 @@ export default {
     }
   },
   watch: {
-    search: function(val) {
+    output: function(val) {
       alert(val)
-      this.update(this.output)
+      this.update(val)
     }
   },        
   props: {
