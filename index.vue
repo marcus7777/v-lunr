@@ -40,11 +40,14 @@ export default {
         return this.input[+valu.ref];
       },this)
       return output
-    }
+    },
+    outputAsText: function(){
+      return JSON.stringify(this.output)
+    },
   },
   watch: {
-    output: function(val) {
-      this.$parent[this.update] = val
+    outputAsText: function() {
+      this.$parent[this.update] = this.output
     }
   },        
   props: {
