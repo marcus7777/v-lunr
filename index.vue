@@ -1,5 +1,9 @@
 <template>
-  <div>{{output}}</div>
+  <div>
+    <div v-for="(item, i) in output">
+	    <slot :name="['lunr', i].join('-')"> {{i}} </slot>
+    </div>
+  </div>
 </template>
 
 <script>
