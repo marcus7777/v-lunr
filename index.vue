@@ -32,14 +32,14 @@ export default {
       }
     },
     output: function(){
-      return this.idx.search(this.search).map(function (valu){
+      const output = this.idx.search(this.search).map(function (valu){
         return this.input[+valu.ref];
       },this)
+      return output
     }
   },
   watch: {
     output: function(val) {
-      alert(val)
       this.update(val)
     }
   },        
