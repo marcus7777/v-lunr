@@ -43,5 +43,8 @@ export default {
   },
   methods: {
     
-  }
+  },
+  template: function(){
+    return "<div>hi</div>"
+  },
 }
