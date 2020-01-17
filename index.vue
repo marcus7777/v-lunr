@@ -44,7 +44,7 @@ export default {
   },
   watch: {
     output: function(val) {
-      this.update(val)
+      this.$parent[this.update] = val
     }
   },        
   props: {
@@ -56,7 +56,7 @@ export default {
       default: '',
     },
     update:{
-      type: Function
+      type: String
     }
   },
   methods: {
