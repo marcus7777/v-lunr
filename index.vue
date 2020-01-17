@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-for="(item, i) in output" :key="i">
-      <slot :name="['lunr', i].join('-')"> {{i}} : {{item}}</slot>
+      <slot v-bind:item="item">
+        {{ item }}
+      </slot>
     </div>
   </div>
 </template>
