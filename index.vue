@@ -63,7 +63,8 @@ export default {
       type: String
     },
     stopWords: {
-      type: Boolean
+      type: Boolean,
+      default: false,
     }
   },
 }
