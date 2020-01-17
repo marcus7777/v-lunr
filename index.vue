@@ -24,9 +24,12 @@ export default {
           return Object.assign({__id: i}, val)
         })
         const first = this.input[0]
+        const stopWords = this.stopWords
         return lunr(function () {
           this.ref('__id')
-          this.pipeline.remove(lunr.stopWordFilter)
+          if (!stopWords) {
+	    this.pipeline.remove(lunr.stopWordFilter)
+          }
           Object.keys(first).forEach(function (key) {
             this.field(key)
           }, this)
@@ -48,11 +51,6 @@ export default {
       return JSON.stringify(this.output)
     },
   },
-  watch: {
-    outputAsText: function() {
-      this.$parent[this.update] = this.output
-    }
-  },        
   props: {
     input: {
       type: Array,
@@ -63,10 +61,10 @@ export default {
     },
     update:{
       type: String
+    },
+    stopWords: {
+      type: Boolean
     }
-  },
-  methods: {
-    
   },
 }
 
