@@ -44,7 +44,5 @@ export default {
   methods: {
     
   },
-  template: function(){
-    return "<div>hi</div>"
-  },
+  template: '<p class="foo bar">Hi</p>',
 }
