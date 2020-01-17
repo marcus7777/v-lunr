@@ -1,3 +1,8 @@
+<template>
+    <div></div>
+</template>
+
+<script>
 import lunr from 'lunr';
 
 export default {
@@ -44,5 +49,6 @@ export default {
   methods: {
     
   },
-  template: '<p>{{search}}</p>',
 }
+
+</script>
