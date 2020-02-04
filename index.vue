@@ -28,7 +28,7 @@ export default {
         return lunr(function () {
           this.ref('__id')
           if (!stopWords) {
-	    this.pipeline.remove(lunr.stopWordFilter)
+            this.pipeline.remove(lunr.stopWordFilter)
             this.pipeline.remove(lunr.stemmer)
           }
           Object.keys(first).forEach(function (key) {
