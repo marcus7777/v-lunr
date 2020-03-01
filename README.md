@@ -1,5 +1,6 @@
 # v-lunr
 ## Usage
+### A import for vue.js of  [LUNR](https://lunrjs.com/)
 ```
     <v-lunr :input="allItems" :search="searchText">
       <template v-slot:default="a">
