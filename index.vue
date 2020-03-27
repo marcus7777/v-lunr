@@ -20,11 +20,16 @@ export default {
   computed:{
     idx: function () {
       if (this.input[0]){
-        const documents = this.input.map(function (val, i){
-          return Object.assign({__id: i}, val)
-        })
         const first = this.input[0]
         const stopWords = this.stopWords
+        const documents = this.input.map(function (val, i){
+          let doc = {}
+          Object.keys(val).forEach(function(key) {
+            doc[key] = JSON.stringify(val[key])
+          })
+          return Object.assign({__id: i}, val)
+        })
+        
         return lunr(function () {
           this.ref('__id')
           if (!stopWords) {
