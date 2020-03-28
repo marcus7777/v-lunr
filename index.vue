@@ -13,27 +13,18 @@ import lunr from 'lunr';
 
 export default {
   name:  'vLunr',
-  data: () => {
-    return {
-    }
-  },
   computed:{
     idx: function () {
       if (this.input[0]){
         const first = this.input[0]
         const stopWords = this.stopWords
-        const deep = this.deep
         const documents = this.input.map(function (val, i){
-          if (deep) {
-            let doc = {}
-            Object.keys(val).forEach(function(key) {
-              doc[key] = JSON.stringify(val[key])
-            })
-            return Object.assign({__id: i}, doc)
-          }
+          let doc = {}
+          Object.keys(val).forEach(function(key) {
+            doc[key] = JSON.stringify(val[key])
+          })
           return Object.assign({__id: i}, val)
         })
-        
         return lunr(function () {
           this.ref('__id')
           if (!stopWords) {
@@ -62,19 +53,12 @@ export default {
     },
   },
   props: {
-    deep: {
-      type: Boolean,
-      default: false,
-    },
     input: {
       type: Array,
     },
     search:{
       type: String,
       default: '',
-    },
-    update:{
-      type: String
     },
     stopWords: {
       type: Boolean,
