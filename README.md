@@ -2,10 +2,7 @@
 ### A import for vue.js of  [LUNR](https://lunrjs.com/)
 
 ## Install 
-```
-yarn add marcus7777/v-lunr
-
-```
+```yarn add marcus7777/v-lunr ```
 
 
 ## Usage
@@ -39,6 +36,13 @@ yarn add marcus7777/v-lunr
 `   }
   </script>
 ```
-## WIP
-    
-    
+## props
+
+deep (boolean)
+  Searches within objects
+input
+  In array of objects to search
+search
+  The string that you are searching for
+stopWords (boolean)
+  Search little word
