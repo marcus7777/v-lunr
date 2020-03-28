@@ -2,7 +2,7 @@
 ### A import for vue.js of  [LUNR](https://lunrjs.com/)
 
 ## Install 
-```yarn add marcus7777/v-lunr ```
+```yarn add v-lunr ```
 
 
 ## Usage
