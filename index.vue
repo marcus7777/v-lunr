@@ -22,11 +22,15 @@ export default {
       if (this.input[0]){
         const first = this.input[0]
         const stopWords = this.stopWords
+        const deep = this.deep
         const documents = this.input.map(function (val, i){
-          let doc = {}
-          Object.keys(val).forEach(function(key) {
-            doc[key] = JSON.stringify(val[key])
-          })
+          if (deep) {
+            let doc = {}
+            Object.keys(val).forEach(function(key) {
+              doc[key] = JSON.stringify(val[key])
+            })
+            return Object.assign({__id: i}, doc)
+          }
           return Object.assign({__id: i}, val)
         })
         
@@ -58,6 +62,10 @@ export default {
     },
   },
   props: {
+    deep: {
+      type: Boolean,
+      default: false,
+    },
     input: {
       type: Array,
     },
