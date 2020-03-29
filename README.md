@@ -41,7 +41,7 @@
 #### deep 
   `Boolean` - Searches within objects
 #### input
-  `Array` of `Object`s - to search
+  `Array` of `Object`- to search. First one is the template for fields
 #### search
   `String` - that you are searching for
 #### stopWords 
