@@ -6,7 +6,7 @@
 
 
 ## Usage
-```
+```html
   <template>
     <v-lunr :input="allItems" :search="searchText">
       <template v-slot="{item}">
