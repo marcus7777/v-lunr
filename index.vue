@@ -11,6 +11,14 @@
 <script>
 import lunr from 'lunr';
 
+function replacer(key, value) {
+  // Filtering out properties
+  if (key[0] === '_') {
+    return undefined;
+  }
+  return value;
+}
+
 export default {
   name:  'vLunr',
   computed:{
@@ -21,7 +29,7 @@ export default {
         const documents = this.input.map(function (val, i){
           let doc = {}
           Object.keys(val).forEach(function(key) {
-            doc[key] = JSON.stringify(val[key])
+            doc[key] = JSON.stringify(val[key], replacer)
           })
           return Object.assign({__id: i}, val)
         })
