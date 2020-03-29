@@ -9,8 +9,8 @@
 ```
   <template>
     <v-lunr :input="allItems" :search="searchText">
-      <template v-slot:default="a">
-        <input type="checkbox"> {{ a.item.name }}
+      <template v-slot="{item}">
+        <input type="checkbox"> {{ item.name }}
       </template>
     </v-lunr>
   </template> 
