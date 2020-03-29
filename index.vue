@@ -40,7 +40,9 @@ export default {
             this.pipeline.remove(lunr.stemmer)
           }
           Object.keys(first).forEach(function (key) {
-            this.field(key)
+            if (key[0] !== '_') {
+              this.field(key)
+            }
           }, this)
           documents.forEach(function (doc) {
             this.add(doc)
