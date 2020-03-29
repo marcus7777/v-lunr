@@ -41,7 +41,7 @@
 #### deep 
   `Boolean` - Searches within objects
 #### input
-  `Array` of objects - to search
+  `Array` of `Object`s - to search
 #### search
   `String` - that you are searching for
 #### stopWords 
