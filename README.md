@@ -46,3 +46,6 @@
   `String` - that you are searching for
 #### stopWords 
   `Boolean` - Search little word
+  
+## TODO
+fields, weights
