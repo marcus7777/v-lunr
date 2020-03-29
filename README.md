@@ -36,7 +36,7 @@
 `   }
   </script>
 ```
-## props
+## Props:
 
 #### deep (boolean)
   Searches within objects
