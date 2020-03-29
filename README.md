@@ -39,10 +39,10 @@
 ## Props:
 
 #### deep 
-  `boolean` - Searches within objects
+  `Boolean` - Searches within objects
 #### input
-  `array` of objects - to search
+  `Array` of objects - to search
 #### search
-  `string` - that you are searching for
+  `String` - that you are searching for
 #### stopWords 
-  `boolean` - Search little word
+  `Boolean` - Search little word
