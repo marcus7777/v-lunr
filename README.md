@@ -38,11 +38,11 @@
 ```
 ## Props:
 
-#### deep (boolean)
-  Searches within objects
+#### deep 
+  `boolean` - Searches within objects
 #### input
-  In array of objects to search
+  `array` of objects - to search
 #### search
-  The string that you are searching for
-#### stopWords (boolean)
-  Search little word
+  `string` - that you are searching for
+#### stopWords 
+  `boolean` - Search little word
