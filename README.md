@@ -38,11 +38,11 @@
 ```
 ## props
 
-deep (boolean)
+#### deep (boolean)
   Searches within objects
-input
+#### input
   In array of objects to search
-search
+#### search
   The string that you are searching for
-stopWords (boolean)
+#### stopWords (boolean)
   Search little word
