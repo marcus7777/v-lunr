@@ -67,6 +67,7 @@ export default {
   props: {
     input: {
       type: Array,
+      required: true,
     },
     search:{
       type: String,
