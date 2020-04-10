@@ -11,14 +11,6 @@
 <script>
 import lunr from 'lunr';
 
-function replacer(key, value) {
-  // Filtering out properties
-  if (key[0] === '_') {
-    return undefined;
-  }
-  return value;
-}
-
 export default {
   name:  'vLunr',
   computed:{
@@ -28,6 +20,16 @@ export default {
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
           let doc = {}
+          let seen = []
+          function replacer(key, value) { 
+            if (key[0] === '_') {
+              return
+            } else if (typeof value === 'object' && value !== null) {
+              if (seen.indexOf(key) !== -1) return;
+              else seen.push(key);
+            }
+            return value;
+          }
           Object.keys(val).forEach(function(key) {
             doc[key] = JSON.stringify(val[key], replacer)
           })
