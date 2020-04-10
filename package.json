@@ -1,6 +1,6 @@
 {
   "name": "v-lunr",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "a vue wrapper for lunr",
   "main": "index.vue",
   "repository": "git@github.com:marcus7777/v-lunr.git",
