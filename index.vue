@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, i) in output" :key="i">
+    <div v-for="(item, key) in output" :key="key">
       <slot v-bind:item="item, key">
         {{ item }}
       </slot>
