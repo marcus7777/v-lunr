@@ -17,10 +17,14 @@ export default {
   },
   computed:{
     output: function(){
-      const output = this.idx.search(this.search).map(function (valu){
-        return this.input[+valu.ref];
-      },this)
-      return output
+      if (this.search) {
+        const output = this.idx.search(this.search).map(function (valu){
+          return this.input[+valu.ref];
+        },this)
+        return output
+      } else {
+        return this.input
+      }
     },
     outputAsText: function(){
       return JSON.stringify(this.output)
