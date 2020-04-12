@@ -57,7 +57,7 @@ export default {
       }	
     },
     output: function(){
-      if (this.search) {
+      if (this.search.trim()) {
         const output = this.idx.search(this.search).map(function (valu){
           return this.input[+valu.ref];
         },this)
