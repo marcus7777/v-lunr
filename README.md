@@ -38,6 +38,8 @@
 ```
 ## Props:
 
+#### log
+  `Boolean` - log to console
 #### deep
   `Boolean` - Searches within objects
 #### input
