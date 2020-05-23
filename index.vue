@@ -64,8 +64,11 @@ export default {
         const output = this.idx.search(this.search).map(function (valu){
           return this.input[+valu.ref];
         },this)
+        this.$emit("results-length", output.length)
+        this.$emit("results", output)
         return output
       } else {
+        this.$emit("length", 0)
         return this.input
       }
     },
