@@ -1,19 +1,19 @@
 # v-lunr
 ### A import for vue.js of  [LUNR](https://lunrjs.com/)
 
-## Install 
+## Install
 ```yarn add v-lunr ```
 
 
 ## Usage
 ```html
   <template>
-    <v-lunr :input="allItems" :search="searchText">
+    <v-lunr log :input="allItems" :search="searchText">
       <template v-slot="{item}">
         <input type="checkbox"> {{ item.name }}
       </template>
     </v-lunr>
-  </template> 
+  </template>
   <script>
     import vLunr from "v-lunr"
     export default {
@@ -24,7 +24,7 @@
         return {
           allItems: [
             {name:'A 0', tags:'main'},
-            {name:'B 1', tags:''}, 
+            {name:'B 1', tags:''},
             {name:'C 2', tags:'main'},
             {name:'D 3', tags:'recent'},
             {name:'E 4', tags:'main recent'},
@@ -38,14 +38,14 @@
 ```
 ## Props:
 
-#### deep 
+#### deep
   `Boolean` - Searches within objects
 #### input
   `Array` of `Object`- to search. First one is the template for fields
 #### search
   `String` - that you are searching for
-#### stopWords 
+#### stopWords
   `Boolean` - Search little word
-  
+
 ## TODO
 fields, weights
