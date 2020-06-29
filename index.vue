@@ -83,7 +83,7 @@ export default {
     },
     words(){
       if (this.idx.invertedIndex) {
-        return this.idx.invertedIndex.map(i => i[0])
+        return Object.keys(this.idx.invertedIndex)
       } else {
         return []
       }
