@@ -12,13 +12,33 @@
 import lunr from 'lunr';
 
 export default {
-  name:  'vLunr',
-  mounted(){
+  methods:{
+    hashThis(message, n = 8) {
+      if (n === 0) return message
+      let hash = 0
+      if (message.length == 0) return this.hashThis(this.hex32(hash),n-1)
+      for (let i = 0;i < message.length;i++) {
+        const char = message.charCodeAt(i)
+        hash = ((hash<<5)-hash)+char
+        hash = hash & hash // Convert to 32bit integer
+      }
+      return this.hashThis(this.hex32(hash),n-1)
+    },
+    hex32(val) {
+      val &= 0xFFFFFFFF;
+      var hex = val.toString(16).toUpperCase();
+      return ("00000000" + hex).slice(-8);
+    },
   },
   computed:{
-    idx: function () {
+    idx() {
       const that = this
-      if (this.input[0]){
+      const hashInput = this.hashThis(JSON.stringify(this.input))
+      const loaded = localStorage.getItem("lunr"+hashInput)
+
+      if (loaded){
+        return lunr.Index.load(JSON.parse(loaded))
+      } else if (this.input[0]){
         const first = this.input[0]
         if (this.log) console.log(first)
         const stopWords = this.stopWords
@@ -39,7 +59,7 @@ export default {
           })
           return Object.assign({__id: i}, val)
         })
-        return lunr(function () {
+        const idx = lunr(function () {
           this.ref('__id')
           if (!stopWords) {
             this.pipeline.remove(lunr.stopWordFilter)
@@ -55,11 +75,21 @@ export default {
           }, this)
           if (that.log) console.log(this)
         })
+        localStorage.setItem("lunr"+hashInput, JSON.stringify(idx) )
+        return idx
       } else {
         return {}
       }
     },
-    output: function(){
+    words(){
+      if (this.idx.invertedIndex) {
+        return this.idx.invertedIndex.map(i => i[0])
+      } else {
+        return []
+      }
+    },
+    output(){
+      this.$emit("words", this.words)
       if (this.search.trim()) {
         const output = this.idx.search(this.search).map(function (valu){
           return this.input[+valu.ref];
@@ -68,11 +98,12 @@ export default {
         this.$emit("results", output)
         return output
       } else {
-        this.$emit("length", 0)
+        this.$emit("results-length", 0)
+        this.$emit("results", this.input)
         return this.input
       }
     },
-    outputAsText: function(){
+    outputAsText(){
       return JSON.stringify(this.output)
     },
   },
