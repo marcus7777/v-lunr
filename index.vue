@@ -89,22 +89,26 @@ export default {
       }
     },
     output(){
-      this.$emit("words", this.words)
       if (this.search.trim()) {
         const output = this.idx.search(this.search).map(function (valu){
           return this.input[+valu.ref];
         },this)
-        this.$emit("results-length", output.length)
-        this.$emit("results", output)
         return output
       } else {
-        this.$emit("results-length", 0)
-        this.$emit("results", this.input)
         return this.input
       }
     },
     outputAsText(){
       return JSON.stringify(this.output)
+    },
+  },
+  waich:{
+    output(){
+      this.$emit("results-length", output.length)
+      this.$emit("results", output)
+    },
+    words(){
+      this.$emit("words", this.words)
     },
   },
   props: {
