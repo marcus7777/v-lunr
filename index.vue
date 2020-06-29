@@ -38,7 +38,7 @@ export default {
 
       if (loaded){
         return lunr.Index.load(JSON.parse(loaded))
-      } else if (this.input[0]){
+      } else if (this.input[0] && this.search){
         const first = this.input[0]
         if (this.log) console.log(first)
         const stopWords = this.stopWords
@@ -102,13 +102,21 @@ export default {
       return JSON.stringify(this.output)
     },
   },
-  waich:{
-    output(){
-      this.$emit("results-length", output.length)
-      this.$emit("results", output)
+  watch:{
+    output(output){
+      const hash = this.hashThis(this.outputAsText)
+      if (this.outputHash !== hash) {
+        this.outputHash = hash
+        this.$emit("results-length", output.length)
+        this.$emit("results", output)
+      }
     },
-    words(){
-      this.$emit("words", this.words)
+    words(words){
+      const hash = this.hashThis(JSON.stringify(words))
+      if (this.wordsHash !== hash) {
+        this.wordsHash = hash
+        this.$emit("words", words)
+      }
     },
   },
   props: {
@@ -125,6 +133,12 @@ export default {
       default: false,
     },
     log: Boolean,
+  },
+  data(){
+    return {
+      outputHash:"",
+      wordsHash:"",
+    }
   },
 }
 
