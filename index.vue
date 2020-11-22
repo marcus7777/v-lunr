@@ -39,8 +39,12 @@ export default {
       if (loaded){
         return lunr.Index.load(JSON.parse(loaded))
       } else if (this.input[0] && this.search){
-        const first = this.input[0]
-        if (this.log) console.log(first)
+        let first = this.input[0]
+        if (Object.keys(this.fields).length) {
+          first = this.fields
+        }
+        if (this.log) console.log("feilds from ",first)
+
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
           let doc = {}
@@ -133,6 +137,10 @@ export default {
       default: false,
     },
     log: Boolean,
+    fields: {
+      type:Object,
+      default:{}
+    },
   },
   data(){
     return {
