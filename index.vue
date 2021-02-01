@@ -39,10 +39,7 @@ export default {
       if (loaded){
         return lunr.Index.load(JSON.parse(loaded))
       } else if (this.input[0] && this.search){
-        let first = this.input[0]
-        if (Object.keys(this.fields).length) {
-          first = this.fields
-        }
+        const first = this.fields
         if (this.log) console.log("feilds from ",first)
 
         const stopWords = this.stopWords
@@ -97,6 +94,8 @@ export default {
         const output = this.idx.search(this.search).map(function (valu){
           return this.input[+valu.ref];
         },this)
+        this.$emit("results", output)
+
         return output
       } else {
         return this.input
@@ -139,7 +138,12 @@ export default {
     log: Boolean,
     fields: {
       type:Object,
-      default:{}
+      default(){
+	if (typeof this.input[0] === "object"){
+          return this.input[0]
+	}
+        return {}
+      }
     },
   },
   data(){
