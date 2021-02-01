@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, key) in output" :key="perpendKey+key">
+    <div v-for="(item, key) in output" :key="perpendKey+hashInput+key">
       <slot v-bind:item="item, key">
         {{ item }}
       </slot>
@@ -31,9 +31,12 @@ export default {
     },
   },
   computed:{
+    hashInput() {
+      return this.hashThis(JSON.stringify(this.input))
+    },
     idx() {
       const that = this
-      const hashInput = this.hashThis(JSON.stringify(this.input))
+      const hashInput = this.hashInput
       const loaded = localStorage.getItem("lunr"+hashInput)
 
       if (loaded){
@@ -139,9 +142,9 @@ export default {
     fields: {
       type:Object,
       default(){
-	if (typeof this.input[0] === "object"){
+        if (typeof this.input[0] === "object"){
           return this.input[0]
-	}
+        }
         return {}
       }
     },
