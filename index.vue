@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, key) in output" :key="key">
+    <div v-for="(item, key) in output" :key="perpendKey+key">
       <slot v-bind:item="item, key">
         {{ item }}
       </slot>
@@ -140,6 +140,10 @@ export default {
     fields: {
       type:Object,
       default:{}
+    },
+    perpendKey:{
+      type: String,
+      default: '',
     },
   },
   data(){
