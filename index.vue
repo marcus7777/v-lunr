@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div v-for="(item, key) in theOutput" :key="perpendKey+hashInput+key">
-      <slot v-bind:item="item, key">
-        {{ item }}
-      </slot>
-    </div>
+    <slot v-bind:item="item, key" v-for="(item, key) in theOutput">
+      {{ item }}
+    </slot>
   </div>
 </template>
 
@@ -17,12 +15,12 @@ export default {
       let that = this
       if (this.idx && this.idx.search) {
         return this.idx.search(search).map(function (valu){
-          return that.input[+valu.ref];
+          return that.input[+valu.ref]
         }, that)
       }
       if (this.idx.then) return this.idx.then(index => {
         return index.search(search).map(function (valu){
-          return that.input[+valu.ref];
+          return that.input[+valu.ref]
         }, that)
       })
       // no index
@@ -106,8 +104,8 @@ export default {
       handler(search = ""){
         if (!search.trim() || search == "undefined") {
           this.$emit("results-length", this.input.length)
-          this.$emit("results", this.input)
-          this.theOutput = this.input
+          this.$emit("results", this.input.slice(0, this.limit))
+          this.theOutput = this.input.slice(0, this.limit)
           return
         }
         const update = output => {
@@ -115,8 +113,8 @@ export default {
           if (this.outputHash !== hash) {
             this.outputHash = hash
             this.$emit("results-length", output.length)
-            this.$emit("results", output)
-            this.theOutput = output
+            this.$emit("results", output.slice(0, this.limit))
+            this.theOutput = output.slice(0, this.limit)
           }
         }
         if (this.output.then) {
@@ -137,6 +135,10 @@ export default {
     search:{
       type: String,
       default: '',
+    },
+    limit: {
+      type: Number,
+      default: 1000,
     },
     stopWords: {
       type: Boolean,
