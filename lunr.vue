@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div key="outputHash">
     <slot v-bind:item="item, key" v-for="(item, key) in theOutput">
       {{ item }}
     </slot>
@@ -11,9 +11,9 @@ import lunr from 'lunr'
 
 export default {
   methods:{
-    output(search){
+    async output(search){
       let that = this
-      if (this.idx && this.idx.search) {
+      if ((await this.idx) && (await this.idx.search)) {
         return this.idx.search(search).map(function (valu){
           return that.input[+valu.ref]
         }, that)
@@ -102,24 +102,38 @@ export default {
   watch:{
     search:{
       handler(search = ""){
-        if (!search.trim() || search == "undefined") {
+        if ((!search.trim() || search == "undefined") && Array.isArray(this.input)) {
           this.$emit("results-length", this.input.length)
           this.$emit("results", this.input.slice(0, this.limit))
           this.theOutput = this.input.slice(0, this.limit)
           return
         }
         const update = output => {
+          if (output.then) {
+            let that = this
+            return output.then(newOutput => {
+              const hash = that.hashThis(JSON.stringify(newOutput))
+              if (that.outputHash === hash) return 
+              that.outputHash = hash
+              that.$emit("results-length", newOutput.length)
+              that.$emit("results", newOutput.slice(0, that.limit))
+              that.theOutput = newOutput.slice(0, that.limit)
+            })
+          }
           const hash = this.hashThis(JSON.stringify(output))
-          if (this.outputHash !== hash) {
-            this.outputHash = hash
+          if (this.outputHash === hash) return 
+          this.outputHash = hash
+          try {
             this.$emit("results-length", output.length)
             this.$emit("results", output.slice(0, this.limit))
             this.theOutput = output.slice(0, this.limit)
+          } catch(e) {
+            console.warn(e, "???", output)
           }
         }
         if (this.output.then) {
           return this.output(search).then(async output => {
-            update(await output)
+            update((await output))
           })
         }
         update(this.output(search))
