@@ -35,22 +35,22 @@ export default {
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
           let doc = {}
-          Object.keys(val).forEach(function(key) {
+          Object.keys(first).forEach(function(key) {
             if (typeof val[key] == "string") {
               doc[key] = val[key]
-	    } else if (typeof val[key] == "object") {
+            } else if (typeof val[key] == "object") {
               doc[key] = Object.value(val[key]).join(" ")
-	    } else if (Array.isArray(val[key])) {
+            } else if (Array.isArray(val[key])) {
               doc[key] = val[key].map(v => {
-              	if (typeof v == "string") {
+                if (typeof v == "string") {
                   return v
                 } else if (typeof v == "object") {
-		  return Object.values(v).join(" ")
-		} else {
-		  return JSON.stringify(v).split('"').join(' ').split('{').join(' ').split('}').join(' ')
-		}
+                  return Object.values(v).join(" ")
+                } else {
+                  return JSON.stringify(v).split('"').join(' ').split('{').join(' ').split('}').join(' ')
+                }
               }).join(" ")
-	    }
+            }
           })
           return {__id: i, ...doc}
         })
