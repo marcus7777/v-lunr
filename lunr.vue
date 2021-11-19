@@ -35,20 +35,24 @@ export default {
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
           let doc = {}
-          let seen = []
-          function replacer(key, value) {
-            if (key[0] === '_') {
-              return
-            } else if (typeof value === 'object' && value !== null) {
-              if (seen.indexOf(key) !== -1) return;
-              else seen.push(key);
-            }
-            return value;
-          }
           Object.keys(val).forEach(function(key) {
-            doc[key] = JSON.stringify(val[key], replacer)
+            if (typeof val[key] == "string") {
+              doc[key] = val[key]
+	    } else if (typeof val[key] == "object") {
+              doc[key] = Object.value(val[key]).join(" ")
+	    } else if (Array.isArray(val[key])) {
+              doc[key] = val[key].map(v => {
+              	if (typeof v == "string") {
+                  return v
+                } else if (typeof v == "object") {
+		  return Object.values(v).join(" ")
+		} else {
+		  return JSON.stringify(v).split('"').join(' ').split('{').join(' ').split('}').join(' ')
+		}
+              }).join(" ")
+	    }
           })
-          return {__id: i, ...val}
+          return {__id: i, ...doc}
         })
         const idx = lunr(function () {
           this.ref('__id')
