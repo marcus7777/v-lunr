@@ -11,6 +11,21 @@ import lunr from 'lunr'
 
 export default {
   methods:{
+    async flattenObj(feilds, obj, parent, res = {}){
+      for(let key in feilds){
+        let propName = parent || key
+        if (typeof obj[key] == 'object') {
+          this.flattenObj(obj[key], obj[key], propName, res) // This updates the 'res' but how??
+        } else {
+          if (res[propName]) {
+            res[propName] += " " + (await obj[key])
+          } else {
+            res[propName] = (await obj[key]) + ""
+          }
+        }
+      }
+      return res
+    },
     async output(search){
       let that = this
       if ((await this.idx) && (await this.idx.search)) {
@@ -34,25 +49,7 @@ export default {
 
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
-          let doc = {}
-          Object.keys(first).forEach(function(key) {
-            if (typeof val[key] == "string") {
-              doc[key] = val[key]
-            } else if (typeof val[key] == "object") {
-              doc[key] = Object.value(val[key]).join(" ")
-            } else if (Array.isArray(val[key])) {
-              doc[key] = val[key].map(v => {
-                if (typeof v == "string") {
-                  return v
-                } else if (typeof v == "object") {
-                  return Object.values(v).join(" ")
-                } else {
-                  return JSON.stringify(v).split('"').join(' ').split('{').join(' ').split('}').join(' ')
-                }
-              }).join(" ")
-            }
-          })
-          return {__id: i, ...doc}
+          return {that.flattenObj(first, val), __id: i}
         })
         const idx = lunr(function () {
           this.ref('__id')
