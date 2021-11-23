@@ -49,7 +49,7 @@ export default {
 
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
-          return {that.flattenObj(first, val), __id: i}
+          return {...that.flattenObj(first, val), __id: i}
         })
         const idx = lunr(function () {
           this.ref('__id')
