@@ -26,9 +26,9 @@ export default {
       }
       return res
     },
-    async output(search){
+    output(search){
       let that = this
-      if ((await this.idx) && (await this.idx.search)) {
+      if (this.idx && this.idx.search) {
         return this.idx.search(search).map(function (valu){
           return that.input[+valu.ref]
         }, that)
