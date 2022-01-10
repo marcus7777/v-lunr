@@ -41,20 +41,19 @@ export default {
       // no index
       return this.input
     },
-    makeIndex(hashInput){
-      let that = this
+    makeIndex(fieldHash){
       if (this.input[0] && this.search){
+        let that = this
         const first = this.fields 
         if (this.log) console.log("feilds from ", first)
-        let fieldHash = this.hashThis(JSON.stringify(first))
 
         if (!this.got[fieldHash]) {
           this.got[fieldHash] = {}
         }
         
         const stopWords = this.stopWords
-        const documents = this.input.map(function (val, i){
-          return {id: 1,...that.flattenObj(first, val)}
+        const documents = this.input.map(async function (val, i){
+          return {id: i, ...(await that.flattenObj(first, val))}
         })
         
         const idx = lunr(function () {
