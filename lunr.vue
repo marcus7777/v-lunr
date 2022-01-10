@@ -45,14 +45,20 @@ export default {
       let that = this
       if (this.input[0] && this.search){
         const first = this.fields
-        if (this.log) console.log("feilds from ",first)
+        if (this.log) console.log("feilds from ", first)
+        let fieldHash = this.hashThis(JSON.stringify(first))
 
+        if (!this.got[fieldHash]) {
+          this.got[fieldHash] = {}
+        }
+        
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
           return {...that.flattenObj(first, val), __id: i}
         })
+        
         const idx = lunr(function () {
-          this.ref('__id')
+          // this.ref('__id')
           if (!stopWords) {
             this.pipeline.remove(lunr.stopWordFilter)
             this.pipeline.remove(lunr.stemmer)
@@ -63,7 +69,11 @@ export default {
             }
           }, this)
           documents.forEach(function (doc) {
-            this.add(doc)
+            let docHash = that.hashThis(JSON.stringify(doc))
+            if (!that.got[fieldHash][docHash]) {
+              this.add(doc)
+              that.got[fieldHash][docHash] = true
+            }
           }, this)
           if (that.log) console.log(this)
         })
@@ -179,6 +189,7 @@ export default {
       outputHash: "",
       theOutput:[],
       cache: {},
+      got: {},
     }
   },
 }
