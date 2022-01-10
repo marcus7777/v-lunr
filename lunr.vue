@@ -31,12 +31,18 @@ export default {
       if (this.idx && this.idx.search) {
         return this.idx.search(search).map(function (valu){
           return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
-        }, that)
+        }, that).reduce((a,c)=>{
+           a.set(c.id, c);
+           return a;
+        }, new Map()).values()
       }
       if (this.idx.then) return this.idx.then(index => {
         return index.search(search).map(function (valu){
           return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
-        }, that)
+        }, that).reduce((a,c)=>{
+          a.set(c.id, c);
+          return a;
+        }, new Map()).values()
       })
       // no index
       return this.input
