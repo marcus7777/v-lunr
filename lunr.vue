@@ -52,9 +52,9 @@ export default {
         }
         
         const stopWords = this.stopWords
-        const documents = this.input.map(async function (val, i){
+        const documents = Promise.all(this.input.map(async function (val, i){
           return {id: i, ...(await that.flattenObj(first, val))}
-        })
+        }))
         
         const idx = lunr(function () {
           if (!stopWords) {
