@@ -11,16 +11,16 @@ import lunr from 'lunr'
 
 export default {
   methods:{
-    async flattenObj(feilds, obj, parent, res = {}){
+    flattenObj(feilds, obj, parent, res = {}){
       for(let key in feilds){
         let propName = parent || key
         if (typeof obj[key] == 'object') {
           this.flattenObj(obj[key], obj[key], propName, res) // This updates the 'res' but how??
         } else {
           if (res[propName]) {
-            res[propName] += " " + (await obj[key])
+            res[propName] += " " + obj[key]
           } else {
-            res[propName] = (await obj[key]) + ""
+            res[propName] = obj[key]
           }
         }
       }
@@ -52,8 +52,8 @@ export default {
         }
         
         const stopWords = this.stopWords
-        const documents = Promise.all(this.input.map(async function (val, i){
-          return {id: i, ...(await that.flattenObj(first, val))}
+        const documents = this.input.map(function (val, i){
+          return {id: i, ...that.flattenObj(first, val)}
         }))
         
         const idx = lunr(function () {
