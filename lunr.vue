@@ -44,7 +44,7 @@ export default {
     makeIndex(hashInput){
       let that = this
       if (this.input[0] && this.search){
-        const first = this.fields
+        const first = this.fields 
         if (this.log) console.log("feilds from ", first)
         let fieldHash = this.hashThis(JSON.stringify(first))
 
@@ -54,11 +54,10 @@ export default {
         
         const stopWords = this.stopWords
         const documents = this.input.map(function (val, i){
-          return {...that.flattenObj(first, val), __id: i}
+          return {id: 1,...that.flattenObj(first, val)}
         })
         
         const idx = lunr(function () {
-          // this.ref('__id')
           if (!stopWords) {
             this.pipeline.remove(lunr.stopWordFilter)
             this.pipeline.remove(lunr.stemmer)
@@ -101,13 +100,31 @@ export default {
     },
   },
   computed:{
-    hashInput() {
-      return this.hashThis(JSON.stringify(this.input))
+    hashFields() {
+      return this.hashThis(JSON.stringify(this.fields))
     },
     idx() {
       if (!this.input[0]) return {}
-      const loaded = this.cache[this.hashInput]
-      return loaded ? lunr.Index.load(loaded) : this.makeIndex(this.hashInput)
+      const loaded = this.cache[this.hashFields]
+      if (loaded) {
+        let idx = lunr.Index.load(loaded)
+        const documents = this.input.map(function (val, i){
+          return {id: i, ...this.flattenObj(this.fields, val)}
+        })
+        if (!this.got(this.fieldHash)){
+          this.got[this.fieldHash] = {}
+        }
+        documents.forEach(doc => {
+          let docHash = this.hashThis(JSON.stringify(doc))
+          if (!this.got[this.fieldHash][docHash]) {
+            idx.add(doc)
+            this.got[this.fieldHash][docHash] = true
+          }
+        })
+	return idx
+      } else {
+        return this.makeIndex(this.hashFields)
+      }
     },
   },
   watch:{
