@@ -30,12 +30,12 @@ export default {
       let that = this
       if (this.idx && this.idx.search) {
         return this.idx.search(search).map(function (valu){
-          return that.input[+valu.ref]
+          return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
         }, that)
       }
       if (this.idx.then) return this.idx.then(index => {
         return index.search(search).map(function (valu){
-          return that.input[+valu.ref]
+          return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
         }, that)
       })
       // no index
