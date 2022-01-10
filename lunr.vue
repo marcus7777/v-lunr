@@ -30,7 +30,12 @@ export default {
       let that = this
       if (this.idx && this.idx.search) {
         return this.idx.search(search).map(function (valu){
-          return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
+          const doc = that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
+          if (doc) {
+            return doc
+          }
+          that.$emit("get", valu)
+          return {id: valu.ref}
         }, that).reduce((a,c)=>{
            a.set(c.id, c);
            return a;
@@ -38,7 +43,12 @@ export default {
       }
       if (this.idx.then) return this.idx.then(index => {
         return index.search(search).map(function (valu){
-          return that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
+          const doc = that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
+          if (doc) {
+            return doc
+          }
+          that.$emit("get", valu)
+          return {id: valu.ref}
         }, that).reduce((a,c)=>{
           a.set(c.id, c);
           return a;
