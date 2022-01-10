@@ -107,7 +107,7 @@ export default {
       const loaded = this.cache[this.hashFields]
       if (loaded) {
         let idx = lunr.Index.load(loaded)
-        const documents = this.input.map(function (val, i){
+        const documents = this.input.map((val, i) => {
           return {id: i, ...this.flattenObj(this.fields, val)}
         })
         if (!this.got(this.fieldHash)){
