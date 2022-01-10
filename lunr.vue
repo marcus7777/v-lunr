@@ -76,7 +76,7 @@ export default {
           if (that.log) console.log(this)
         })
         that.cache[fieldHash] = idx.toJSON()
-        if (that.log) console.log("idx", JSON.stringify(that.cache[fieldHash]))
+        if (that.log) console.log("idx", JSON.parse(that.cache[fieldHash]))
         return idx
       } else {
         return {}
