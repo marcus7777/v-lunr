@@ -127,7 +127,7 @@ export default {
         const documents = this.input.map((val, i) => {
           return {id: i, ...this.flattenObj(this.fields, val)}
         })
-        if (!this.got(this.fieldHash)){
+        if (!this.got[this.fieldHash]){
           this.got[this.fieldHash] = {}
         }
         documents.forEach(doc => {
