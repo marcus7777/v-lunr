@@ -29,7 +29,7 @@ export default {
     output(search){
       let that = this
       if (this.idx && this.idx.search) {
-        return this.idx.search(search).map(function (valu){
+        return [ ...this.idx.search(search).map(function (valu){
           const doc = that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
           if (doc) {
             return doc
@@ -39,10 +39,10 @@ export default {
         }, that).reduce((a,c)=>{
            a.set(c.id, c);
            return a;
-        }, new Map()).values().map{c => c.value}
+        }, new Map()).values()]
       }
       if (this.idx.then) return this.idx.then(index => {
-        return index.search(search).map(function (valu){
+        return [ ...index.search(search).map(function (valu){
           const doc = that.input.find((doc,i) => valu.ref == doc.id || valu.ref == i)
           if (doc) {
             return doc
@@ -52,7 +52,7 @@ export default {
         }, that).reduce((a,c)=>{
           a.set(c.id, c);
           return a;
-        }, new Map()).values().map{c => c.value}
+        }, new Map()).values()]
       })
       // no index
       return this.input
