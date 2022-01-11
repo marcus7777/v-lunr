@@ -39,7 +39,7 @@ export default {
         }, that).reduce((a,c)=>{
            a.set(c.id, c);
            return a;
-        }, new Map()).values()
+        }, new Map()).values().map{c => c.value}
       }
       if (this.idx.then) return this.idx.then(index => {
         return index.search(search).map(function (valu){
@@ -52,7 +52,7 @@ export default {
         }, that).reduce((a,c)=>{
           a.set(c.id, c);
           return a;
-        }, new Map()).values()
+        }, new Map()).values().map{c => c.value}
       })
       // no index
       return this.input
