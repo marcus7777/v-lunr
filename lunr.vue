@@ -50,8 +50,8 @@ export default {
           that.$emit("get", valu)
           return {id: valu.ref}
         }, that).reduce((a,c)=>{
-          a.set(c.id, c);
-          return a;
+          a.set(c.id, c)
+          return a
         }, new Map()).values()]
       })
       // no index
@@ -92,7 +92,7 @@ export default {
           if (that.log) console.log(this)
         })
         that.cache[fieldHash] = idx.toJSON()
-        if (that.log) console.log("idx", that.cache[fieldHash])
+        that.$emit("indexed", that.cache)
         return idx
       } else {
         return {}
@@ -107,12 +107,12 @@ export default {
         hash = ((hash<<5)-hash)+char
         hash = hash & hash // Convert to 32bit integer
       }
-      return this.hashThis(this.hex32(hash),n-1)
+      return this.hashThis(this.hex32(hash), n-1)
     },
     hex32(val) {
       val &= 0xFFFFFFFF;
-      var hex = val.toString(16).toUpperCase();
-      return ("00000000" + hex).slice(-8);
+      var hex = val.toString(16).toUpperCase()
+      return ("00000000" + hex).slice(-8)
     },
   },
   computed:{
@@ -137,6 +137,8 @@ export default {
             this.got[this.fieldHash][docHash] = true
           }
         })
+        this.cache[this.fieldHash] = idx.toJSON()
+        this.$emit("indexed", this.cache)
 	return idx
       } else {
         return this.makeIndex(this.hashFields)
@@ -162,6 +164,7 @@ export default {
               that.$emit("results-length", newOutput.length)
               that.$emit("results", newOutput.slice(0, that.limit))
               that.theOutput = newOutput.slice(0, that.limit)
+              console.log(newOutput.slice(0, that.limit))
             })
           }
           const hash = this.hashThis(JSON.stringify(output))
@@ -171,6 +174,7 @@ export default {
             this.$emit("results-length", output.length)
             this.$emit("results", output.slice(0, this.limit))
             this.theOutput = output.slice(0, this.limit)
+            console.log(output.slice(0, this.limit)
           } catch(e) {
             console.warn(e, "???", output)
           }
@@ -212,6 +216,12 @@ export default {
         return {}
       }
     },
+    cache: {
+      type:Object,
+      default(){
+        return {}
+      }
+    },
     perpendKey:{
       type: String,
       default: '',
@@ -221,7 +231,6 @@ export default {
     return {
       outputHash: "",
       theOutput:[],
-      cache: {},
       got: {},
     }
   },
