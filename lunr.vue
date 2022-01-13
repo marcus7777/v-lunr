@@ -174,7 +174,7 @@ export default {
             this.$emit("results-length", output.length)
             this.$emit("results", output.slice(0, this.limit))
             this.theOutput = output.slice(0, this.limit)
-            console.log(output.slice(0, this.limit)
+            console.log(output.slice(0, this.limit))
           } catch(e) {
             console.warn(e, "???", output)
           }
