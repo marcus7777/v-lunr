@@ -8,6 +8,6 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "lunr": "^2.3.8"
+    "elasticlunr": "^0.9.5"
   }
 }

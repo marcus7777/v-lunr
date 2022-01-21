@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import lunr from 'lunr'
+import elunr from 'elasticlunr'
 
 export default {
   methods:{
@@ -72,25 +72,25 @@ export default {
           return {id: i, ...that.flattenObj(first, val)}
         })
         
-        const idx = lunr(function () {
+        const idx = elunr(function () {
           if (!stopWords) {
-            this.pipeline.remove(lunr.stopWordFilter)
-            this.pipeline.remove(lunr.stemmer)
+            this.pipeline.remove(elunr.stopWordFilter)
+            this.pipeline.remove(elunr.stemmer)
           }
           Object.keys(first).forEach(function (key) {
             if (key[0] !== '_') {
-              this.field(key)
-            }
-          }, this)
-          documents.forEach(function (doc) {
-            let docHash = that.hashThis(JSON.stringify(doc))
-            if (!that.got[fieldHash][docHash]) {
-              this.add(doc)
-              that.got[fieldHash][docHash] = true
+              this.addField(key)
             }
           }, this)
           if (that.log) console.log(this)
         })
+        documents.forEach(function (doc) {
+          let docHash = that.hashThis(JSON.stringify(doc))
+          if (!that.got[fieldHash][docHash]) {
+            this.addDoc(doc)
+            that.got[fieldHash][docHash] = true
+          }
+        }, idx)
         that.cache[fieldHash] = idx.toJSON()
         that.$emit("indexed", that.cache)
         return idx
@@ -133,7 +133,8 @@ export default {
         documents.forEach(doc => {
           let docHash = this.hashThis(JSON.stringify(doc))
           if (!this.got[this.fieldHash][docHash]) {
-            idx.add(doc)
+            idx.addDoc(doc)
+            idx.updateDoc(doc)
             this.got[this.fieldHash][docHash] = true
           }
         })
@@ -174,7 +175,7 @@ export default {
             this.$emit("results-length", output.length)
             this.$emit("results", output.slice(0, this.limit))
             this.theOutput = output.slice(0, this.limit)
-            console.log(output.slice(0, this.limit))
+            if (this.log) console.log(output.slice(0, this.limit))
           } catch(e) {
             console.warn(e, "???", output)
           }
