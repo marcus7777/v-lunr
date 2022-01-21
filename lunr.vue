@@ -125,6 +125,7 @@ export default {
       if (loaded) {
         let idx = lunr.Index.load(loaded)
         const documents = this.input.map((val, i) => {
+          if (this.log) console.log({id: i, ...this.flattenObj(this.fields, val)})
           return {id: i, ...this.flattenObj(this.fields, val)}
         })
         if (!this.got[this.fieldHash]){
@@ -133,14 +134,14 @@ export default {
         documents.forEach(doc => {
           let docHash = this.hashThis(JSON.stringify(doc))
           if (!this.got[this.fieldHash][docHash]) {
-            idx.addDoc(doc)
             idx.updateDoc(doc)
+            idx.addDoc(doc)
             this.got[this.fieldHash][docHash] = true
           }
         })
         this.cache[this.fieldHash] = idx.toJSON()
         this.$emit("indexed", this.cache)
-	return idx
+        return idx
       } else {
         return this.makeIndex(this.hashFields)
       }

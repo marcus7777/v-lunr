@@ -1,5 +1,5 @@
 # v-lunr
-### A import for vue.js of  [LUNR](https://lunrjs.com/)
+### A import for vue.js of [elasticlunr](http://elasticlunr.com/)
 
 ## Install
 ```yarn add v-lunr ```
