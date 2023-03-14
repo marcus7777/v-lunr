@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import elunr from 'elasticlunr'
+import elasticlunr from 'elasticlunr'
 
 export default {
   methods:{
@@ -72,10 +72,10 @@ export default {
           return {id: i, ...that.flattenObj(first, val)}
         })
         
-        const idx = elunr(function () {
+        const idx = elasticlunr(function () {
           if (!stopWords) {
-            this.pipeline.remove(elunr.stopWordFilter)
-            this.pipeline.remove(elunr.stemmer)
+            this.pipeline.remove(elasticlunr.stopWordFilter)
+            this.pipeline.remove(elasticlunr.stemmer)
           }
           Object.keys(first).forEach(function (key) {
             if (key[0] !== '_') {
